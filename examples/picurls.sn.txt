@@ -1,0 +1,52 @@
+#
+# Peteris Krumins (peter@catonmat.net), 2007.09.08
+# http://www.catonmat.net  -  good coders code, great reuse
+#
+# Scraper pattern file for picurls.com website
+# 
+# The format of the file is the following:
+# [url:|title:|desc:] regex pattern
+#
+# url:, title:, desc: are optional. they specify if the entry
+# on a website should be matched against its url, title or description.
+#
+# if url:, title:, desc: are not specified, it defaults to matching
+# pattern against title and description.
+#
+
+# match picture urls
+#
+url: \.jpg$
+url: \.gif$
+url: \.png$
+
+# match common patterns describing posts having pictures in them
+#
+[[(].*picture.*[])]
+[[(].*pic.*[])]
+[[(].*image.*[])]
+[[(].*photo.*[])]
+[[(].*comic.*[])]
+[[(].*chart.*[])]
+[[(].*graph.*[])]
+
+photos? of
+pics? of
+images? of
+pictures? of
+comics? of
+charts? of
+graphs? of
+grapics? of
+(this|these|those) photos?
+(this|these|those) pics?
+(this|these|those) images?
+photosets? (on|of)
+
+# match domains containing just pics
+url: xkcd\.com
+url: flickr\.com
+url: photobucket\.com
+url: imageshack\.us
+url: bestpicever\.com
+

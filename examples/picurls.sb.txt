@@ -1,0 +1,46 @@
+#
+# Peteris Krumins (peter@catonmat.net), 2007.10.10
+# http://www.catonmat.net  -  good coders code, great reuse
+#
+# Scraper pattern file for picurls.com website
+#
+# This is another pattern filtering format that the scraper accepts.
+# 
+# Here we can specify a list of predicates as perl subroutines which
+# get called on each item found on the site being scraped.
+#
+# If the predicate subroutine returns true, the item gets accepted.
+# If it returns false, it gets discarded and the next subroutine gets
+# called until all of them have either failed or one has accepted the item.
+# 
+# WARNING: code must be correctly indented, otherwise program will fail
+#          to extract the perl subroutine.
+# 
+
+#
+# These patterns are mostly for social bookmarking (sb) sites, where people
+# do not write "[PIC]" or "(Pic)" in title.
+#
+
+# Discard items which point to index pages
+#
+perl: sub {
+    use URI;
+    my $post = shift;
+
+    my $uri = URI->new($post->{url});
+    my $path = $uri->path;
+
+    if (!length $path) { # empty path
+        return 0;
+    }
+    elsif ($path =~ m!^/+$!) { # just a slash '/'
+        return 0;
+    }
+    elsif ($path =~ m!^/(home|index)\.(php|html|htm|aspx?)$!i) { # index files
+        return 0;
+    }
+    
+    return 1;
+}
+
